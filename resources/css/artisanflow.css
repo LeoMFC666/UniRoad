@@ -1,0 +1,1419 @@
+/* =============================================================================
+   ARTISANFLOW - Advanced Visual Framework for UniRoad Roadmaps
+   Modern animations, transitions, and visual enhancements
+   ============================================================================= */
+
+:root {
+    /* Modern Color Palette */
+    --color-primary: #3b82f6;
+    --color-primary-light: #60a5fa;
+    --color-primary-dark: #1e40af;
+    
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-info: #06b6d4;
+    
+    /* Background Gradients */
+    --bg-base: #0f172a;
+    --bg-secondary: #0b1224;
+    --bg-tertiary: #1e293b;
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-tertiary: rgba(255, 255, 255, 0.5);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+    
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+}
+
+/* Dark mode is default */
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-base: #ffffff;
+        --bg-secondary: #f9fafb;
+        --bg-tertiary: #f3f4f6;
+        --text-primary: #111827;
+        --text-secondary: rgba(17, 24, 39, 0.7);
+        --text-tertiary: rgba(17, 24, 39, 0.5);
+    }
+}
+
+/* =============================================================================
+   GLOBAL ANIMATIONS & KEYFRAMES
+   ============================================================================= */
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes connectionDraw {
+    from {
+        stroke-dashoffset: 1000;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* =============================================================================
+   UTILITY CLASSES
+   ============================================================================= */
+
+.animate-slide-in-up {
+    animation: slideInUp var(--transition-base) ease-out;
+}
+
+.animate-slide-in-down {
+    animation: slideInDown var(--transition-base) ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft var(--transition-base) ease-out;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight var(--transition-base) ease-out;
+}
+
+.animate-scale-in {
+    animation: scaleIn var(--transition-base) ease-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn var(--transition-base) ease-out;
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-glow {
+    animation: glow 2s ease-in-out infinite;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.animate-bounce {
+    animation: bounce 1s ease-in-out infinite;
+}
+
+/* =============================================================================
+   ENHANCED NODE STYLING
+   ============================================================================= */
+
+.node {
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    border-width: 2px;
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: move;
+    user-select: none;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.node::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    pointer-events: none;
+    border-radius: var(--radius-lg);
+}
+
+.node:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl), var(--shadow-glow);
+    border-width: 2.5px;
+}
+
+.node.selected,
+.node.is-selected {
+    animation: glow 1.5s ease-in-out;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), inset 0 0 10px rgba(59, 130, 246, 0.2);
+    border-width: 3px;
+}
+
+.node.selected::after,
+.node.is-selected::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 12px;
+    height: 12px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.node.dashed {
+    border-style: dashed;
+}
+
+/* Node Content */
+.node-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.node-label {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-primary);
+    word-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.3;
+}
+
+.node-description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.node-image-preview {
+    width: 80%;
+    height: auto;
+    max-height: 60px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+}
+
+.node-attachment-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.node-attachment-badge {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.node-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 14px;
+    padding: 0;
+}
+
+.action-btn:hover {
+    background: rgba(59, 130, 246, 0.4);
+    border-color: rgba(59, 130, 246, 0.6);
+    transform: scale(1.1);
+}
+
+/* Edge Handles */
+.edge-handle {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #7c3aed;
+    border: 2px solid rgba(255, 255, 255, 0.72);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: crosshair;
+    font-size: 12px;
+    opacity: 0;
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    padding: 0;
+    z-index: 10;
+    pointer-events: none;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.42);
+}
+
+.node:hover .edge-handle,
+.node.selected .edge-handle,
+.node.is-selected .edge-handle {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.edge-handle:hover {
+    box-shadow: 0 0 14px rgba(124, 58, 237, 0.68);
+}
+
+.edge-top {
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.82);
+}
+
+.node:hover .edge-top,
+.node.selected .edge-top,
+.node.is-selected .edge-top {
+    transform: translateX(-50%) scale(1);
+}
+
+.edge-right {
+    right: -28px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.82);
+}
+
+.node:hover .edge-right,
+.node.selected .edge-right,
+.node.is-selected .edge-right {
+    transform: translateY(-50%) scale(1);
+}
+
+.edge-bottom {
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.82);
+}
+
+.node:hover .edge-bottom,
+.node.selected .edge-bottom,
+.node.is-selected .edge-bottom {
+    transform: translateX(-50%) scale(1);
+}
+
+.edge-left {
+    left: -28px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.82);
+}
+
+.node:hover .edge-left,
+.node.selected .edge-left,
+.node.is-selected .edge-left {
+    transform: translateY(-50%) scale(1);
+}
+
+/* Resize Handle */
+.resize-handle {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    width: 16px;
+    height: 16px;
+    background: var(--color-primary);
+    border: 2px solid var(--text-primary);
+    border-radius: 2px;
+    cursor: nwse-resize;
+    opacity: 0;
+    transition: all var(--transition-fast);
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+}
+
+.node:hover .resize-handle {
+    opacity: 1;
+}
+
+.resize-handle:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.8);
+}
+
+/* Node Type Colors with Glassmorphism */
+.node-start {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+    border-color: rgba(34, 197, 94, 0.8);
+}
+
+.node-start:hover {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(34, 197, 94, 0.15));
+    border-color: rgba(34, 197, 94, 0.95);
+}
+
+.node-step {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+    border-color: rgba(59, 130, 246, 0.8);
+}
+
+.node-step:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.15));
+    border-color: rgba(59, 130, 246, 0.95);
+}
+
+.node-decision {
+    background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(251, 146, 60, 0.05));
+    border-color: rgba(251, 146, 60, 0.8);
+}
+
+.node-decision:hover {
+    background: linear-gradient(135deg, rgba(251, 146, 60, 0.25), rgba(251, 146, 60, 0.15));
+    border-color: rgba(251, 146, 60, 0.95);
+}
+
+.node-end {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+    border-color: rgba(239, 68, 68, 0.8);
+}
+
+.node-end:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.15));
+    border-color: rgba(239, 68, 68, 0.95);
+}
+
+.node-example {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(56, 189, 248, 0.05));
+    border-color: rgba(56, 189, 248, 0.8);
+    border-style: dashed;
+}
+
+.node-example:hover {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(56, 189, 248, 0.15));
+    border-color: rgba(56, 189, 248, 0.95);
+}
+
+.node-note {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(234, 179, 8, 0.05));
+    border-color: rgba(234, 179, 8, 0.8);
+}
+
+.node-note:hover {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.25), rgba(234, 179, 8, 0.15));
+    border-color: rgba(234, 179, 8, 0.95);
+}
+
+.node-tip {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    border-color: rgba(16, 185, 129, 0.8);
+}
+
+.node-tip:hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.15));
+    border-color: rgba(16, 185, 129, 0.95);
+}
+
+.node-resource {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(168, 85, 247, 0.05));
+    border-color: rgba(168, 85, 247, 0.8);
+}
+
+.node-resource:hover {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(168, 85, 247, 0.15));
+    border-color: rgba(168, 85, 247, 0.95);
+}
+
+.node-milestone {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.05));
+    border-color: rgba(249, 115, 22, 0.8);
+}
+
+.node-milestone:hover {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.25), rgba(249, 115, 22, 0.15));
+    border-color: rgba(249, 115, 22, 0.95);
+}
+
+.node-practice {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(14, 165, 233, 0.05));
+    border-color: rgba(14, 165, 233, 0.8);
+}
+
+.node-practice:hover {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(14, 165, 233, 0.15));
+    border-color: rgba(14, 165, 233, 0.95);
+}
+
+.node-branch {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.05));
+    border-color: rgba(6, 182, 212, 0.8);
+}
+
+.node-branch:hover {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(6, 182, 212, 0.15));
+    border-color: rgba(6, 182, 212, 0.95);
+}
+
+.node-warning {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+    border-color: rgba(239, 68, 68, 0.8);
+}
+
+.node-warning:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.15));
+    border-color: rgba(239, 68, 68, 0.95);
+}
+
+.node-info {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+    border-color: rgba(59, 130, 246, 0.8);
+}
+
+.node-info:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.15));
+    border-color: rgba(59, 130, 246, 0.95);
+}
+
+/* =============================================================================
+   CONNECTION LINE STYLING
+   ============================================================================= */
+
+.connections {
+    animation: fadeIn var(--transition-base);
+}
+
+.connections line,
+.connections path {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke var(--transition-base), filter var(--transition-base);
+}
+
+.connections path.connection-solid {
+    stroke: rgba(147, 197, 253, 0.8);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.3));
+}
+
+.connections path.connection-dashed {
+    stroke: rgba(147, 197, 253, 0.6);
+    stroke-width: 2;
+    stroke-dasharray: 8, 6;
+    filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.2));
+}
+
+.connections path:hover {
+    stroke: rgba(147, 197, 253, 1);
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+    stroke-width: 2.5;
+}
+
+.connections marker {
+    fill: rgba(147, 197, 253, 0.8);
+    transition: fill var(--transition-fast);
+}
+
+.connections path:hover + defs marker {
+    fill: rgba(147, 197, 253, 1);
+}
+
+/* =============================================================================
+   TOOLBAR & CONTROLS
+   ============================================================================= */
+
+.toolbar {
+    background: linear-gradient(
+        180deg,
+        rgba(15, 23, 42, 0.98) 0%,
+        rgba(15, 23, 42, 0.95) 100%
+    );
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-base);
+}
+
+.toolbar:hover {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.toolbar button,
+.toolbar input,
+.toolbar select {
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: var(--text-primary);
+    padding: 10px 14px;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.toolbar button:hover,
+.toolbar select:hover,
+.toolbar input:hover {
+    background: rgba(59, 130, 246, 0.24);
+    border-color: rgba(59, 130, 246, 0.6);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+}
+
+.toolbar button:active {
+    transform: scale(0.98);
+}
+
+.toolbar button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Botao de acao principal */
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    border: 1px solid var(--color-primary-light);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Danger Button */
+.btn-danger {
+    background: linear-gradient(135deg, var(--color-danger), #dc2626);
+    border: 1px solid #f87171;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #f87171, var(--color-danger));
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+/* =============================================================================
+   EDITOR & VIEWER LAYOUT
+   ============================================================================= */
+
+body.roadmap-editor-page,
+body.roadmap-viewer-page {
+    margin: 0;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: inherit;
+}
+
+.editor-container {
+    display: flex;
+    height: calc(100vh - 60px);
+    background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.08), transparent 20%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.05), transparent 15%),
+        var(--bg-secondary);
+}
+
+.canvas-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-width: 0;
+}
+
+.canvas-wrapper {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    min-height: 0;
+    cursor: grab;
+}
+
+.canvas-wrapper.grabbing {
+    cursor: grabbing;
+}
+
+#canvas-content {
+    position: absolute;
+    inset: 0;
+    transform-origin: 0 0;
+    width: 10000px;
+    height: 10000px;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+#canvas {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.connections {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.sidebar {
+    width: 320px;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.property-input {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    box-sizing: border-box;
+    border-radius: var(--radius-lg);
+    background: rgba(59, 130, 246, 0.16);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    color: var(--text-primary);
+}
+
+.property-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.viewer-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, rgba(0, 67, 203, 0.25), transparent 20%),
+        linear-gradient(180deg, #07080f 0%, #081a33 45%, #001d84 100%);
+}
+
+.viewer-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 32px;
+}
+
+.viewer-main {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    padding: 0 24px 24px;
+    gap: 24px;
+}
+
+.viewer-canvas-panel {
+    flex: 1;
+    min-width: 0;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.95);
+    overflow: auto;
+    position: relative;
+    min-height: 480px;
+}
+
+.viewer-canvas-panel #svg,
+.viewer-canvas-panel #canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.viewer-canvas-panel #canvas {
+    z-index: 1;
+}
+
+.viewer-canvas-panel #svg {
+    z-index: 2;
+    pointer-events: none;
+}
+
+.viewer-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(16, 24, 50, 0.92);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.viewer-sidebar h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.875rem;
+}
+
+.list-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    cursor: default;
+    transition: background var(--transition-fast);
+}
+
+.list-item:hover {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.node.highlight {
+    box-shadow: 0 0 24px rgba(59, 130, 246, 0.45);
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 48px 24px;
+}
+
+/* =============================================================================
+   SIDEBAR STYLING
+   ============================================================================= */
+
+.sidebar {
+    background: linear-gradient(
+        180deg,
+        rgba(15, 23, 42, 0.98) 0%,
+        rgba(15, 23, 42, 0.95) 100%
+    );
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-base);
+}
+
+.sidebar:hover {
+    border-right-color: rgba(255, 255, 255, 0.12);
+}
+
+.tool-section {
+    animation: slideInLeft var(--transition-base);
+}
+
+.tool-section h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    transition: color var(--transition-fast);
+}
+
+.tool-section:hover h3 {
+    color: var(--text-secondary);
+}
+
+.tool-btn {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    text-align: left;
+    display: block;
+    border-radius: var(--radius-lg);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.tool-btn:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+    transform: translateX(2px);
+}
+
+.tool-btn:active {
+    transform: translateX(0);
+}
+
+.property-input {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border-radius: var(--radius-lg);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.property-input:focus {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+    outline: none;
+}
+
+.property-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+/* =============================================================================
+   DIALOG & MODALS
+   ============================================================================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn var(--transition-base);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: var(--bg-base);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: var(--shadow-xl);
+    animation: slideInUp var(--transition-base);
+    position: relative;
+    z-index: 1001;
+}
+
+.modal-header {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.modal-body {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.modal-footer button {
+    padding: 10px 16px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.modal-footer button:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.modal-footer button.primary {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+}
+
+.modal-footer button.primary:hover {
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+/* =============================================================================
+   TOAST NOTIFICATIONS
+   ============================================================================= */
+
+.toast-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toast {
+    background: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-lg);
+    animation: slideInRight var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 300px;
+    backdrop-filter: blur(10px);
+}
+
+.toast.success {
+    border-left: 4px solid var(--color-success);
+}
+
+.toast.error {
+    border-left: 4px solid var(--color-danger);
+}
+
+.toast.warning {
+    border-left: 4px solid var(--color-warning);
+}
+
+.toast.info {
+    border-left: 4px solid var(--color-info);
+}
+
+.toast-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.toast-message {
+    color: var(--text-primary);
+    font-size: 14px;
+    flex: 1;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 280px;
+    }
+    
+    .node {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .editor-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        max-height: 200px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        overflow-x: auto;
+        overflow-y: auto;
+        display: flex;
+        gap: 24px;
+        padding: 16px 24px;
+    }
+    
+    .tool-section {
+        flex-shrink: 0;
+    }
+    
+    .toolbar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+    
+    .toolbar button,
+    .toolbar input,
+    .toolbar select {
+        flex-shrink: 0;
+    }
+    
+    .node {
+        width: 140px !important;
+        height: 100px !important;
+        font-size: 11px;
+    }
+    
+    .edge-handle {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .toast-container {
+        top: 12px;
+        right: 12px;
+        left: 12px;
+    }
+    
+    .toast {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        padding: 12px 16px;
+        max-height: 150px;
+    }
+    
+    .node {
+        width: 120px !important;
+        height: 90px !important;
+        font-size: 10px;
+    }
+    
+    .modal-content {
+        padding: 20px;
+        max-width: 95%;
+    }
+    
+    .toolbar {
+        gap: 8px;
+        padding: 0 12px;
+        height: auto;
+    }
+}
+
+/* =============================================================================
+   PRINT STYLES
+   ============================================================================= */
+
+@media print {
+    .toolbar,
+    .sidebar,
+    .modal-overlay {
+        display: none;
+    }
+    
+    .editor-container {
+        height: auto;
+    }
+    
+    .canvas-wrapper {
+        height: auto;
+        overflow: visible;
+    }
+    
+    .node {
+        break-inside: avoid;
+    }
+}
+
+/* =============================================================================
+   ACCESSIBILITY
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus visible for keyboard navigation */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.edge-handle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 0;
+}
+
+.af-selection-box {
+    position: absolute;
+    z-index: 9;
+    border: 1px solid rgba(96, 165, 250, 0.82);
+    background: rgba(96, 165, 250, 0.12);
+    pointer-events: none;
+    border-radius: var(--radius-sm);
+}
+
+.af-context-menu {
+    position: fixed;
+    z-index: 1000;
+    min-width: 150px;
+    padding: 6px;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: var(--radius-md);
+    background: rgba(17, 21, 32, 0.96);
+    box-shadow: var(--shadow-xl);
+    backdrop-filter: blur(12px);
+}
+
+.af-context-menu button {
+    width: 100%;
+    display: block;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-primary);
+    padding: 9px 10px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.af-context-menu button:hover {
+    background: rgba(124, 58, 237, 0.22);
+}
+
+.af-tool-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: var(--radius-md);
+    background: rgba(17, 21, 32, 0.86);
+}
+
+.af-tool-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 34px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: var(--radius-sm);
+    background: rgba(8, 10, 16, 0.42);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 800;
+    transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.af-tool-button.is-active {
+    border-color: rgba(34, 211, 197, 0.5);
+    background: rgba(34, 211, 197, 0.12);
+    color: #5eead4;
+}
+
+.af-tool-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.af-toolbar-separator {
+    width: 1px;
+    height: 22px;
+    background: rgba(148, 163, 184, 0.18);
+}
+
+.af-text-tool {
+    min-width: 34px;
+    font-size: 15px;
+}
+
+.af-history-button {
+    min-width: 42px;
+    min-height: 40px;
+    font-size: 20px;
+}
+
+.af-canvas-wrap.is-pan-mode {
+    cursor: grab;
+}
+
+.af-canvas-wrap.is-panning {
+    cursor: grabbing;
+}
+
+#roadmap-canvas,
+#af-connections {
+    transform-origin: 0 0;
+}
+
+/* =============================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================================================= */
+
+.will-animate {
+    will-change: transform, opacity;
+}
+
+.gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+    .node {
+        border-width: 3px;
+    }
+    
+    .toolbar button,
+    .toolbar input,
+    .toolbar select {
+        border-width: 2px;
+    }
+}

@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --ur-bg: #080a10;
+        --ur-panel: rgba(17, 21, 32, 0.88);
+        --ur-panel-strong: #111520;
+        --ur-border: rgba(148, 163, 184, 0.16);
+        --ur-text: #f8fafc;
+        --ur-muted: #93a4c6;
+        --ur-brand: #22d3c5;
+        --ur-blue: #60a5fa;
+        --ur-danger: #fb7185;
+    }
+
+    html {
+        background: var(--ur-bg);
+    }
+
+    body {
+        color: var(--ur-text);
+        font-family: Inter, Figtree, ui-sans-serif, system-ui, sans-serif;
+    }
+
+    ::selection {
+        background: rgba(34, 211, 197, 0.28);
+        color: #ffffff;
+    }
+
+    :focus-visible {
+        outline: 2px solid rgba(34, 211, 197, 0.72);
+        outline-offset: 2px;
+    }
+
+    input,
+    textarea,
+    select {
+        accent-color: var(--ur-brand);
+        color-scheme: dark;
+    }
+
+    select,
+    option,
+    optgroup {
+        background-color: #111520;
+        color: #f8fafc;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus {
+        -webkit-text-fill-color: var(--ur-text);
+        box-shadow: 0 0 0 1000px rgba(17, 21, 32, 0.96) inset;
+        caret-color: var(--ur-text);
+        transition: background-color 9999s ease-in-out 0s;
+    }
+}
+
+@layer components {
+    .uniroad-shell {
+        background:
+            radial-gradient(circle at top left, rgba(34, 211, 197, 0.16), transparent 28rem),
+            radial-gradient(circle at top right, rgba(96, 165, 250, 0.14), transparent 30rem),
+            var(--ur-bg);
+        color: var(--ur-text);
+    }
+
+    .uniroad-sidebar {
+        background: rgba(8, 10, 16, 0.94);
+        border-right: 1px solid var(--ur-border);
+        box-shadow: none;
+    }
+
+    .uniroad-topbar {
+        background: rgba(8, 10, 16, 0.94);
+        border-bottom: 1px solid var(--ur-border);
+        box-shadow: none;
+    }
+
+    .landing-bg {
+        background:
+            radial-gradient(circle at top, rgba(34, 211, 197, 0.14), transparent 20rem),
+            linear-gradient(180deg, #080a10 0%, #0f172a 54%, #06182f 100%) !important;
+    }
+
+    .hero-panel,
+    .panel,
+    .card-panel {
+        background: var(--ur-panel) !important;
+        border: 1px solid var(--ur-border) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28) !important;
+    }
+
+    .nav-pill,
+    .btn-primary,
+    .btn-danger {
+        border-radius: 8px !important;
+    }
+
+    .nav-pill {
+        background: rgba(17, 21, 32, 0.76) !important;
+        border: 1px solid var(--ur-border) !important;
+        color: var(--ur-text) !important;
+    }
+
+    .nav-pill:hover {
+        border-color: rgba(34, 211, 197, 0.42) !important;
+        color: #ffffff !important;
+    }
+
+    .btn-primary {
+        background: rgba(37, 99, 235, 0.9) !important;
+        border: 1px solid rgba(96, 165, 250, 0.44) !important;
+        color: #ffffff !important;
+    }
+
+    .btn-primary:hover {
+        background: rgba(29, 78, 216, 0.95) !important;
+        transform: translateY(-1px);
+    }
+
+    .btn-danger {
+        background: rgba(244, 63, 94, 0.16) !important;
+        border: 1px solid rgba(244, 63, 94, 0.42) !important;
+        color: #fecdd3 !important;
+    }
+
+    .input-field,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    textarea,
+    select {
+        background-color: rgba(17, 21, 32, 0.82);
+        border-color: rgba(148, 163, 184, 0.22);
+        color: var(--ur-text);
+    }
+
+    .input-field:focus,
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="number"]:focus,
+    textarea:focus,
+    select:focus {
+        border-color: rgba(34, 211, 197, 0.58);
+        box-shadow: 0 0 0 3px rgba(34, 211, 197, 0.14);
+    }
+
+    .uniroad-auth {
+        background:
+            radial-gradient(circle at top, rgba(34, 211, 197, 0.16), transparent 22rem),
+            var(--ur-bg);
+    }
+
+    .uniroad-auth-card {
+        background: var(--ur-panel);
+        border: 1px solid var(--ur-border);
+        border-radius: 8px;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+        color: var(--ur-text);
+    }
+}
